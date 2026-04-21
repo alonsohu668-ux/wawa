@@ -1,36 +1,120 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EuroDolls 🦞
+
+> Premium European Silicone & TPE Love Dolls e-commerce platform
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router, Turbopack)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS + Zinc/Amber design system
+- **State**: Zustand (cart with localStorage persistence)
+- **Payments**: Stripe API route ready
+- **i18n**: 5 languages (EN/ES/PT/FR/DE) with locale routing
+- **Deployment**: Vercel (EU node recommended)
+
+## Features
+
+- 🌐 5-language路由 (EN/ES/PT/FR/DE)
+- 🛒 购物车 + Stripe结算
+- 🎨 深色主题 + 金色点缀 (Western European审美)
+- ✨ 动漫 + 写实两种风格产品
+- 📱 全响应式设计
+- ⚡ 静态生成 + 按需SSR混合
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit: http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables (.env.local)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+# Stripe (required for checkout)
+STRIPE_SECRET_KEY=sk_live_...
+STRIPE_PUBLISHABLE_KEY=pk_live_...
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
 
-## Learn More
+# PayPal (optional)
+PAYPAL_CLIENT_ID=...
+PAYPAL_SECRET=...
 
-To learn more about Next.js, take a look at the following resources:
+# App
+NEXT_PUBLIC_APP_URL=https://your-domain.com
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy to Vercel (EU Node)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Push to GitHub**
+   ```bash
+   git remote add origin https://github.com/YOUR_USERNAME/euro-dolls.git
+   git push -u origin master
+   ```
 
-## Deploy on Vercel
+2. **Connect to Vercel**
+   - Go to [vercel.com](https://vercel.com)
+   - Import project → select GitHub repo
+   - Framework: Next.js
+   - Region: Frankfurt (eu-central-1) recommended
+   - Add environment variables from `.env.example`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. **Configure Domain**
+   - Add your domain (e.g., eurodolls.com)
+   - Update `NEXT_PUBLIC_APP_URL` to your domain
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── [lang]/           # Locale routes (en/es/pt/fr/de)
+│   │   ├── page.tsx      # Home
+│   │   ├── shop/         # Product listing
+│   │   ├── product/[id]/ # Product detail
+│   │   ├── cart/         # Shopping cart
+│   │   ├── brands/       # Brand showcase
+│   │   ├── about/        # About / Factory story
+│   │   └── faq/          # FAQ
+│   └── api/stripe/       # Stripe checkout API
+├── components/
+│   └── layout/Header.tsx # Nav + language switcher
+├── data/products.json    # Product catalog
+└── lib/
+    ├── i18n.ts           # All 5 language translations
+    └── store/cart.ts     # Zustand cart store
+```
+
+## Routes
+
+| Path | Description |
+|------|-------------|
+| `/en` `/es` `/pt` `/fr` `/de` | Homepage per language |
+| `/[lang]/shop` | Product catalog |
+| `/[lang]/product/[id]` | Product detail |
+| `/[lang]/cart` | Shopping cart |
+| `/[lang]/brands` | Brand showcase |
+| `/[lang]/about` | Factory story |
+| `/[lang]/faq` | FAQ |
+
+## Next Steps After First Deploy
+
+1. Replace placeholder product images with licensed supplier photos
+2. Connect real payment providers (Stripe live keys, PayPal)
+3. Set up email automation (newsletter, order confirmations)
+4. Add actual shipping provider integration
+5. Configure custom domain + SSL
+
+## Recommended Suppliers
+
+| Brand | Style | Notes |
+|-------|-------|-------|
+| Sino-doll | Anime + Realistic | Best dual-style, EU export exp. |
+| Zelex | Realistic (EU taste) | Premium, EU warehouse available |
+| Piper Doll | TPE + Silicone | Anime-friendly, good pricing |
+
+---
+
+Built by 刹那's Agent 🦞 · Vercel-ready · EU-optimized
