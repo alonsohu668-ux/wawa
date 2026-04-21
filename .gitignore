@@ -1,0 +1,6 @@
+-e .env.local
+.env.production
+node_modules/
+.next/
+out/
+*.log
