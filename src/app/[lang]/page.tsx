@@ -98,9 +98,7 @@ export default async function HomePage({params}: Props) {
                 <Link key={product.id} href={`/${lang}/product/${product.id}`}
                   className="group bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden hover:border-amber-600 transition-all">
                   <div className="aspect-square bg-zinc-800 relative">
-                    <div className="absolute inset-0 flex items-center justify-center text-zinc-700 text-5xl font-bold">
-                      {name[0]}
-                    </div>
+                    <img src={product.images?.[0] || '/images/products/placeholder.jpg'} alt={name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     {product.badge && (
                       <span className={`absolute top-2 left-2 text-xs font-bold px-2 py-0.5 rounded text-white ${
                         product.badge === 'NEW' ? 'bg-emerald-600' :

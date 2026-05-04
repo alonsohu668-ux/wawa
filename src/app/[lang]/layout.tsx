@@ -1,3 +1,5 @@
+import AgeGate from '@/components/AgeGate';
+
 export default async function LocaleLayout({
   children,
   params,
@@ -13,6 +15,7 @@ export default async function LocaleLayout({
         <meta name="theme-color" content="#18181b"/>
       </head>
       <body className="bg-zinc-950 text-zinc-100 antialiased">
+        <AgeGate />
         {children}
       </body>
     </html>

@@ -63,9 +63,7 @@ export default function ShopPage({params}: Props) {
                 className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden hover:border-amber-600 transition-all hover:-translate-y-0.5 group">
                 <Link href={`/${lang}/product/${product.id}`}>
                   <div className="aspect-square bg-zinc-800 relative">
-                    <div className="absolute inset-0 flex items-center justify-center text-zinc-700 text-6xl font-bold">
-                      {(product.name[lang as keyof typeof product.name] as string || product.name.en)[0]}
-                    </div>
+                    <img src={product.images?.[0] || '/images/products/placeholder.jpg'} alt={product.name[lang as keyof typeof product.name] as string || product.name.en} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     {product.badge && (
                       <span className={`absolute top-2 left-2 text-xs font-bold px-2 py-0.5 rounded ${
                         product.badge === 'NEW' ? 'bg-emerald-600 text-white' :
@@ -97,7 +95,7 @@ export default function ShopPage({params}: Props) {
                     id: product.id,
                     name: product.name[lang as keyof typeof product.name] as string || product.name.en,
                     price: product.price,
-                    image: product.images[0],
+                    image: product.images?.[0] || '/images/products/placeholder.jpg',
                     quantity: 1,
                     options: { material: product.material, height: `${product.height}cm` }
                   })}

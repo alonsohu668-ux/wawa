@@ -19,6 +19,7 @@ export default function ProductPage({params}: Props) {
   const product = productsData.products.find(p => p.id === id);
   const addItem = useCartStore(s => s.addItem);
   const [qty, setQty] = useState(1);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   const related = useMemo(() =>
     productsData.products.filter(p => p.id !== id).slice(0, 4),
@@ -62,16 +63,32 @@ export default function ProductPage({params}: Props) {
           <div className="grid md:grid-cols-2 gap-12">
             {/* Images */}
             <div>
-              <div className="aspect-square bg-zinc-900 border border-zinc-800 rounded-2xl flex items-center justify-center">
-                <div className="text-9xl font-bold text-zinc-800">
-                  {product.name[lang as keyof typeof translations]?.[0] || product.name.en[0]}
+              <div className="aspect-square bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+                <img 
+                  src={product.images?.[selectedImageIndex] || '/images/products/placeholder.jpg'} 
+                  alt={product.name[lang as keyof typeof translations] || product.name.en} 
+                  className="w-full h-full object-cover" 
+                />
+              </div>
+              {product.images && product.images.length > 1 && (
+                <div className="grid grid-cols-5 gap-2 mt-2">
+                  {product.images.slice(0, 10).map((img, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setSelectedImageIndex(i)}
+                      className={`aspect-square bg-zinc-900 border rounded-lg overflow-hidden transition-all ${
+                        selectedImageIndex === i ? 'border-amber-500 ring-2 ring-amber-500/50' : 'border-zinc-800 hover:border-zinc-600'
+                      }`}
+                    >
+                      <img 
+                        src={img} 
+                        alt={`${product.name[lang as keyof typeof translations] || product.name.en} ${i + 1}`} 
+                        className="w-full h-full object-cover" 
+                      />
+                    </button>
+                  ))}
                 </div>
-              </div>
-              <div className="grid grid-cols-4 gap-2 mt-2">
-                {[0,1,2,3].map(i => (
-                  <div key={i} className="aspect-square bg-zinc-900 border border-zinc-800 rounded-lg"/>
-                ))}
-              </div>
+              )}
             </div>
 
             {/* Details */}
@@ -138,7 +155,7 @@ export default function ProductPage({params}: Props) {
                   id: product.id,
                   name: product.name[lang as keyof typeof translations] || product.name.en,
                   price: product.price,
-                  image: product.images[0],
+                  image: product.images?.[0] || '/images/products/placeholder.jpg',
                   quantity: qty,
                   options: { material: product.material, height: `${product.height}cm` }
                 })}
@@ -172,9 +189,7 @@ export default function ProductPage({params}: Props) {
                 <Link key={p.id} href={`/${lang}/product/${p.id}`}
                   className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden hover:border-amber-600 transition-all">
                   <div className="aspect-square bg-zinc-800 relative">
-                    <div className="absolute inset-0 flex items-center justify-center text-zinc-700 text-5xl font-bold">
-                      {p.name[lang as keyof typeof translations]?.[0] || p.name.en[0]}
-                    </div>
+                    <img src={p.images?.[0] || '/images/products/placeholder.jpg'} alt={p.name[lang as keyof typeof translations] || p.name.en} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   </div>
                   <div className="p-3">
                     <p className="text-zinc-200 text-sm">{p.name[lang as keyof typeof translations] || p.name.en}</p>
